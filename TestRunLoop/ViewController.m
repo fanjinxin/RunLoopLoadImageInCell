@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "UIImageView+WebCache.h"
 #define  ShowImageTableViewReusableIdentifier @"ShowImageTableViewReusableIdentifier"
 #define ImageWidth 50
 
@@ -142,7 +143,7 @@ static void Callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, 
     //每个cell中添加3张图片
     for (int i = 0; i < 5; i++)
     {
-#if 1 //优化过的效果
+#if 0 //优化过的效果
         //添加任务到数组
         __weak typeof(self) weakSelf = self;
         [self addTasks:^{
@@ -158,7 +159,12 @@ static void Callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, 
         [cell.contentView addSubview:cellImageView];
         
 #endif
+#if 1 //三方库的效果
+        UIImageView* cellImageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*(ImageWidth+5), 5, ImageWidth, ImageWidth)];
+        [cellImageView  sd_setImageWithURL:[NSURL URLWithString:@"http://img5.duitang.com/uploads/item/201312/14/20131214173346_iVKdT.jpeg"]];
+        [cell.contentView addSubview:cellImageView];
         
+#endif
     }
     
     return cell;
